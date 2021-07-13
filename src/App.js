@@ -1,25 +1,35 @@
-import logo from './logo.svg';
 import './App.css';
+import { ethers } from "ethers";
+import { useEffect } from 'react';
+import { useWallet, UseWalletProvider } from 'use-wallet'
+import Home from "./pages/home";
 
-function App() {
+const App = () => {
+  const wallet = useWallet()
+  
+
+  useEffect(() => {
+    // const provider = new ethers.providers.Web3Provider(window.ethereum);
+    // const signer = provider.getSigner();
+    // console.log({signer});
+    
+  });
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Home></Home>
     </div>
   );
 }
 
-export default App;
+// export default App;
+export default () => (
+  <UseWalletProvider
+    chainId={4}
+    connectors={{
+      // This is how connectors get configured
+    }}
+  >
+    <App />
+  </UseWalletProvider>
+);
