@@ -6,7 +6,9 @@ import { useWallet } from 'use-wallet';
 import { getOwner } from '../../contracts/nft-contract';
 import { produce } from '../../contracts/nft-factory';
 
-import MintNFT from '../../components/mint-nft';
+import DeployNFTContract from '../../components/deploy-contract';
+import CreateNFT from '../../components/create-token';
+import GetCommission from '../../components/get-commission';
 
 const Home = () => {
 
@@ -22,22 +24,13 @@ const Home = () => {
     }
   }
 
-  const mintNFT = async () => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    const newNFTAddress = await produce();
-    console.log({ newNFTAddress });
-    const nft = new ethers.Contract(newNFTAddress, abi, signer);
-    nft.initialize();
-    console.log();
-  }
-
-
   return (
-    <div>
+    <div style={{ padding: '20px' }}>
       <h2>Non Fungible Contract</h2>
       <button onClick={connectWallet}>Connect Wallet</button>
-      <MintNFT></MintNFT>
+      <DeployNFTContract></DeployNFTContract>
+      <CreateNFT></CreateNFT>
+      <GetCommission></GetCommission>
     </div>
   );
 }
