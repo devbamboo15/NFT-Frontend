@@ -4,12 +4,12 @@ import { abi } from '../../contracts/nft-contract.abi.json';
 import { NFT_CONTRACT_ADDRESS } from '../../constants/contract-address';
 import { getCommission } from '../../contracts/nft-contract';
 
-const GetCommission = () => {
+const ReduceCommission = () => {
 
     const [tokenId, setTokenId] = useState('');
-    const [commission, setCommission] = useState('');
+    const [reduceCommissionPercent, setReduceCommissionPercent] = useState(0);
   
-    const getData = async (event) => {
+    const submitData = async (event) => {
         event.preventDefault();
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner();
@@ -22,20 +22,21 @@ const GetCommission = () => {
     return (
         <div style={{ textAlign: 'left'}}>
             <h3>Get Commission</h3>
-            <form onSubmit={getData}>
+            <form onSubmit={submitData}>
                 <div>
                     <p>Token ID</p>
                     <input type="text" value={tokenId} onChange={(evt) => setTokenId(evt.target.value)} />
                 </div>
                 <div>
-                    <p>{commission}</p>
+                    <p>Reduce Commissoin Percent [0 - 10000]</p>
+                    <input type="text" value={reduceCommissionPercent} onChange={(evt) => setReduceCommissionPercent(evt.target.value)} />
                 </div>
                 <div style={{ paddingTop: '16px' }}>
-                    <input type="submit" value="Get" />
+                    <input type="submit" value="Set" />
                 </div>
             </form>
         </div>
     );
 }
 
-export default GetCommission;
+export default ReduceCommission;

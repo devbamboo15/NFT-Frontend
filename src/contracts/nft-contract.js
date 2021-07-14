@@ -12,6 +12,29 @@ export async function create(address, signer) {
     }
 }
 
+export async function getCommission(address, signer, tokenId) {
+    try {
+        const contract = new ethers.Contract(address, abi, signer);
+        const res = await contract.getCommission(tokenId);
+        return res;
+    } catch (e) {
+        console.log(e);
+        return {};
+    }
+}
+
+export async function reduceCommission(address, signer, tokenId, percent) {
+    try {
+        const contract = new ethers.Contract(address, abi, signer);
+        const res = await contract.reduceCommission(tokenId, percent);
+        return res;
+    } catch (e) {
+        console.log(e);
+        return {};
+    }
+}
+
+
 export async function getOwner(address, signer) {
     try {
         const contract = new ethers.Contract(address, abi, signer);
@@ -60,17 +83,6 @@ export async function getApproved(address, signer, tokenId) {
     try {
         const contract = new ethers.Contract(address, abi, signer);
         const res = await contract.getApproved(tokenId);
-        return res;
-    } catch (e) {
-        console.log(e);
-        return {};
-    }
-}
-
-export async function getCommission(address, signer, tokenId) {
-    try {
-        const contract = new ethers.Contract(address, abi, signer);
-        const res = await contract.getCommission(tokenId);
         return res;
     } catch (e) {
         console.log(e);
