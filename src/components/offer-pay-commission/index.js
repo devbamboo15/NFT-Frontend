@@ -2,18 +2,18 @@ import { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 import { abi } from '../../contracts/nft-contract.abi.json';
 import { NFT_CONTRACT_ADDRESS } from '../../constants/contract-address';
-import { reduceCommission } from '../../contracts/nft-contract';
+import { offerToPayCommission } from '../../contracts/nft-contract';
 
-const ReduceCommission = () => {
+const OfferToPayCommission = () => {
 
-    const [tokenId, setTokenId] = useState('');
-    const [reduceCommissionPercent, setReduceCommissionPercent] = useState(0);
+    const [tokenId, setTokenId] = useState(0);
+    const [amount, setAmount] = useState(0);
   
     const submitData = async (event) => {
         event.preventDefault();
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner();
-        const res = await reduceCommission(NFT_CONTRACT_ADDRESS[4], signer, tokenId, reduceCommissionPercent);
+        const res = await offerToPayCommission(NFT_CONTRACT_ADDRESS[4], signer, tokenId, amount);
         console.log({res});
         // setCommission(res.toString());
     }
@@ -21,22 +21,22 @@ const ReduceCommission = () => {
 
     return (
         <div style={{ textAlign: 'left'}}>
-            <h3>Reduce Commission</h3>
+            <h3>Offer To Pay Commission</h3>
             <form onSubmit={submitData}>
                 <div>
                     <p>Token ID</p>
                     <input type="text" value={tokenId} onChange={(evt) => setTokenId(evt.target.value)} />
                 </div>
                 <div>
-                    <p>Reduce Commissoin Percent [0 - 10000]</p>
-                    <input type="text" value={reduceCommissionPercent} onChange={(evt) => setReduceCommissionPercent(evt.target.value)} />
+                    <p>Amount</p>
+                    <input type="text" value={amount} onChange={(evt) => setAmount(evt.target.value)} />
                 </div>
                 <div style={{ paddingTop: '16px' }}>
-                    <input type="submit" value="Set" />
+                    <input type="submit" value="Submit" />
                 </div>
             </form>
         </div>
     );
 }
 
-export default ReduceCommission;
+export default OfferToPayCommission;

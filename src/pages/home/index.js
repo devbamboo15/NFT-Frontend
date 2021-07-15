@@ -1,14 +1,15 @@
-import { useEffect } from 'react';
-import { ethers } from 'ethers';
-import abi from '../../contracts/nft-factory.abi.json';
-import { NFT_FACTORY_ADDRESS } from '../../constants/contract-address';
 import { useWallet } from 'use-wallet';
-import { getOwner } from '../../contracts/nft-contract';
-import { produce } from '../../contracts/nft-factory';
 
 import DeployNFTContract from '../../components/deploy-contract';
 import CreateNFT from '../../components/create-token';
 import GetCommission from '../../components/get-commission';
+import ReduceCommission from '../../components/reduce-commission';
+import ClaimLostToken from '../../components/claim-lost-token';
+import ListForSale from '../../components/list-for-sale';
+import RemoveFromSale from '../../components/remove-from-sale';
+import Buy from '../../components/buy';
+import OfferToPayCommission from '../../components/offer-pay-commission';
+import TokensByAuthor from '../../components/tokens-by-author';
 
 const Home = () => {
 
@@ -25,12 +26,25 @@ const Home = () => {
   }
 
   return (
-    <div style={{ padding: '20px' }}>
+    <div style={{ padding: '20px 40px' }}>
       <h2>Non Fungible Contract</h2>
       <button onClick={connectWallet}>Connect Wallet</button>
-      <DeployNFTContract></DeployNFTContract>
-      <CreateNFT></CreateNFT>
-      <GetCommission></GetCommission>
+      <div style={{display: 'flex', marginTop: '30px'}}>
+        <div style={{flex: '1'}}>
+          <DeployNFTContract></DeployNFTContract>
+          <GetCommission></GetCommission>
+          <ClaimLostToken></ClaimLostToken>
+          <RemoveFromSale></RemoveFromSale>
+          <OfferToPayCommission></OfferToPayCommission>
+        </div>
+        <div style={{flex: '1'}}>
+          <CreateNFT></CreateNFT>
+          <ReduceCommission></ReduceCommission>
+          <ListForSale></ListForSale>
+          <Buy></Buy>
+          <TokensByAuthor></TokensByAuthor>
+        </div>
+      </div>
     </div>
   );
 }

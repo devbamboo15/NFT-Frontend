@@ -1,10 +1,36 @@
-import { ethers } from 'ethers';
+import { ethers, utils } from 'ethers';
 import { abi } from './nft-contract.abi.json';
 
-export async function create(address, signer) {
+export async function create(address, signer, uri, commissionParams) {
     try {
         const contract = new ethers.Contract(address, abi, signer);
-        const res = await contract.name();
+        console.log({ uri, commissionParams });
+        const res = await contract.create("https://google.com", ['0x022E292b44B5a146F2e8ee36Ff44D3dd863C915c', 100, 7 , 3600, 25200, 1000 ]);
+        return res;
+    } catch (e) {
+        console.log(e);
+        return {};  
+    }
+}
+
+export async function buyWithCoins(address, signer, tokenId) {
+    try {
+        const contract = new ethers.Contract(address, abi, signer);
+        const overrides = {
+            value: utils.parseEther('0.01'),
+        }
+        const res = await contract.buy(tokenId, overrides);
+        return res;
+    } catch (e) {
+        console.log(e);
+        return {};
+    }
+}
+
+export async function buyWithTokens(address, signer, tokenId, price) {
+    try {
+        const contract = new ethers.Contract(address, abi, signer);
+        const res = await contract.buy(tokenId);
         return res;
     } catch (e) {
         console.log(e);
@@ -34,6 +60,60 @@ export async function reduceCommission(address, signer, tokenId, percent) {
     }
 }
 
+export async function claimLostToken(address, signer, erc20Address) {
+    try {
+        const contract = new ethers.Contract(address, abi, signer);
+        const res = await contract.claimLostToken(erc20Address);
+        return res;
+    } catch (e) {
+        console.log(e);
+        return {};
+    }
+}
+
+export async function listForSale(address, signer, tokenId, amount, consumeToken) {
+    try {
+        const contract = new ethers.Contract(address, abi, signer);
+        const res = await contract.listForSale(tokenId, amount, consumeToken);
+        return res;
+    } catch (e) {
+        console.log(e);
+        return {};
+    }
+}
+
+export async function removeFromSale(address, signer, tokenId) {
+    try {
+        const contract = new ethers.Contract(address, abi, signer);
+        const res = await contract.removeFromSale(tokenId);
+        return res;
+    } catch (e) {
+        console.log(e);
+        return {};
+    }
+}
+
+export async function offerToPayCommission(address, signer, tokenId, amount) {
+    try {
+        const contract = new ethers.Contract(address, abi, signer);
+        const res = await contract.offerToPayCommission(tokenId, amount);
+        return res;
+    } catch (e) {
+        console.log(e);
+        return {};
+    }
+}
+
+export async function tokensByAuthor(address, signer, author) {
+    try {
+        const contract = new ethers.Contract(address, abi, signer);
+        const res = await contract.tokensByAuthor(author);
+        return res;
+    } catch (e) {
+        console.log(e);
+        return [];
+    }
+}
 
 export async function getOwner(address, signer) {
     try {
